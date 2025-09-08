@@ -7,15 +7,16 @@ class TemperaSimulada:
         self.fator = fator
 
     def executar(self, coords):
+        cost_list = []
         custo0 = Coordenada.calcular_distancia_total(coords)
 
         self.temperatura = 30
         self.fator = 0.99
         
-        for i in range(1000):
-
+        for _ in range(1000):
             self.temperatura = self.temperatura * self.fator
-            for j in range(100):
+            cost_list.append(custo0)
+            for _ in range(100):
                 r1, r2 = numpy.random.randint(0, len(coords), size=2)
                 #swap
                 aux = coords[r1]
@@ -36,4 +37,5 @@ class TemperaSimulada:
                         aux = coords[r1]
                         coords[r1] = coords[r2]
                         coords[r2] = aux
-        return coords, custo0
+
+        return coords, custo0, cost_list

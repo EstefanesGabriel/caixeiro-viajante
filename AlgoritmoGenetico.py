@@ -41,7 +41,9 @@ class AlgoritmoGenetico():
             i, j = random.sample(range(len(route)), 2)
             route[i], route[j] = route[j], route[i]
 
-    def executar(self, coords, population_size = 100, generations = 500, mutation_rate = 0.01):
+    def executar(self, coords, population_size = 100, generations = 1000, mutation_rate = 0.01):
+        cost_list = []
+        cost_list.append(Coordenada.calcular_distancia_total(coords))
         population = self.create_population(population_size, coords)
         best_route = None
         best_distance = float('inf')
@@ -51,6 +53,7 @@ class AlgoritmoGenetico():
             best_gen_route = population[numpy.argmin(fitnesses)]
             best_gen_distance = min(fitnesses)
 
+            cost_list.append(best_gen_distance)
             if best_gen_distance < best_distance:
                 best_route = best_gen_route
                 best_distance = best_gen_distance
@@ -64,5 +67,5 @@ class AlgoritmoGenetico():
             
                 population = new_population
 
-        return best_route, best_distance
+        return best_route, best_distance, cost_list
 

@@ -1,9 +1,27 @@
 import numpy
-import random
 import matplotlib.pyplot as plt
 from  Coordenada import Coordenada
 from AlgoritmoGenetico import AlgoritmoGenetico
 from TemperaSimulada import TemperaSimulada
+from EscolhaGulosa import EscolhaGulosa
+
+def draw_cost_generation(y_list1, y_list2, y_list3, y_list4):
+    x_list1 = numpy.arange(1, len(y_list1)+1)
+    x_list2 = numpy.arange(1, len(y_list2)+1)
+    x_list3 = numpy.arange(1, len(y_list3)+1)
+    x_list4 = numpy.arange(1, len(y_list4)+1)
+
+    plt.plot(x_list1, y_list1, label="Algoritmo Genético")
+    plt.plot(x_list2, y_list2, label="Têmpera Simulada")
+    plt.plot(x_list3, y_list3, label="Escolha Gulosa")
+    plt.plot(x_list4, y_list4, label="Caminho Aleatório", linestyle='--')
+
+    plt.title("Distância por Iteração")
+    plt.xlabel("Iterações")
+    plt.ylabel("Distância")
+    plt.legend()
+
+    plt.show()
 
 if __name__ == "__main__":
     coords = []
@@ -11,6 +29,7 @@ if __name__ == "__main__":
         coords.append(
             Coordenada(i, numpy.random.uniform(), numpy.random.uniform())
         )
+
 
     fig = plt.figure(figsize=(15, 5))
     ax1 = fig.add_subplot(131)
@@ -26,11 +45,14 @@ if __name__ == "__main__":
 
     algoritmo_genetico = AlgoritmoGenetico()
     tempera_simulada = TemperaSimulada(30, 0.99)
-    best_route_ag, best_distance_ag = algoritmo_genetico.executar(coords)
-    best_route_ts, best_distance_ts = tempera_simulada.executar(coords)
+    escolha_gulosa = EscolhaGulosa()
+    best_route_ag, best_distance_ag, cost_time_ag = algoritmo_genetico.executar(coords.copy())
+    best_route_ts, best_distance_ts, cost_time_ts = tempera_simulada.executar(coords.copy())
+    best_route_guloso, best_distance_guloso = escolha_gulosa.executar(coords.copy())
 
     print(f"Custo - Algoritmo Genetico: {best_distance_ag}")
     print(f"Custo - Tempera Simulada: {best_distance_ts}")
+
 
     for primeiro, segundo in zip(best_route_ag[:-1], best_route_ag[1:]):
         ax2.plot([primeiro.x, segundo.x], [primeiro.y, segundo.y], 'b')
@@ -43,5 +65,14 @@ if __name__ == "__main__":
     for c in best_route_ts:
         ax3.plot(c.x, c.y, 'ro')
 
+
+    dist_line_guloso = []
+    dist_line_aleatorio = []
+    init_dist = Coordenada.calcular_distancia_total(coords)
+    for _ in range(1000):
+        dist_line_guloso.append(best_distance_guloso)
+        dist_line_aleatorio.append(init_dist)
+
     plt.tight_layout()
     plt.show()
+    draw_cost_generation(cost_time_ag, cost_time_ts, dist_line_guloso, dist_line_aleatorio)
