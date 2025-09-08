@@ -13,7 +13,6 @@ class TemperaSimulada:
         self.fator = 0.99
         
         for i in range(1000):
-            print(i, 'custo =', custo0)
 
             self.temperatura = self.temperatura * self.fator
             for j in range(100):
@@ -37,4 +36,4 @@ class TemperaSimulada:
                         aux = coords[r1]
                         coords[r1] = coords[r2]
                         coords[r2] = aux
-        return coords
+        return coords, custo0
