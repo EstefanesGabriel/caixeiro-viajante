@@ -61,7 +61,7 @@ def draw_final_cost(coords, best_route_guloso, best_route_ts, best_route_ag):
 
 if __name__ == "__main__":
     coords = []
-    for i in range(100):
+    for i in range(50):
         coords.append(
             Coordenada(i, numpy.random.uniform(), numpy.random.uniform())
         )
