@@ -36,28 +36,32 @@ def draw_final_cost(coords, best_route_guloso, best_route_ts, best_route_ag):
     # Desenha os pontos
     for c in coords:
         ax1.plot(c.x, c.y, 'ro')
+    ax1.set_title("Caminho Aleatório")
     for primeiro, segundo in zip(best_route_guloso[:-1], best_route_guloso[1:]):
         ax2.plot([primeiro.x, segundo.x], [primeiro.y, segundo.y], 'b')
     ax2.plot([best_route_guloso[0].x, best_route_guloso[-1].x], [best_route_guloso[0].y, best_route_guloso[-1].y], 'b')
     for c in best_route_guloso:
         ax2.plot(c.x, c.y, 'ro')
+    ax2.set_title("Escolha Gulosa")
     for primeiro, segundo in zip(best_route_ts[:-1], best_route_ts[1:]):
         ax3.plot([primeiro.x, segundo.x], [primeiro.y, segundo.y], 'b')
     ax3.plot([best_route_ts[0].x, best_route_ts[-1].x], [best_route_ts[0].y, best_route_ts[-1].y], 'b')
     for c in best_route_ts:
         ax3.plot(c.x, c.y, 'ro')
+    ax3.set_title("Têmpera Simulada")
     for primeiro, segundo in zip(best_route_ag[:-1], best_route_ag[1:]):
         ax4.plot([primeiro.x, segundo.x], [primeiro.y, segundo.y], 'b')
     ax4.plot([best_route_ag[0].x, best_route_ag[-1].x], [best_route_ag[0].y, best_route_ag[-1].y], 'b')
     for c in best_route_ag:
         ax4.plot(c.x, c.y, 'ro')
+    ax4.set_title("Algoritmo Genético")
 
     plt.tight_layout()
     plt.show()
 
 if __name__ == "__main__":
     coords = []
-    for i in range(10):
+    for i in range(100):
         coords.append(
             Coordenada(i, numpy.random.uniform(), numpy.random.uniform())
         )

@@ -41,7 +41,7 @@ class AlgoritmoGenetico():
             i, j = random.sample(range(len(route)), 2)
             route[i], route[j] = route[j], route[i]
 
-    def executar(self, coords, population_size = 100, generations = 1000, mutation_rate = 0.01):
+    def executar(self, coords, population_size = 100, generations = 1000, mutation_rate = 0.2):
         cost_list = []
         cost_list.append(Coordenada.calcular_distancia_total(coords))
         population = self.create_population(population_size, coords)
